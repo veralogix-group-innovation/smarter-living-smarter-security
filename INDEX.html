@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veralogix SecureConnect™ - The Future of Residential Living</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Removed Three.js script as it's no longer needed for particles -->
+    <style>
+        /* BRAND GUIDELINES & CUSTOM STYLES */
+        :root {
+            --mine-shaft: #000000;
+            --salad-green: #A8CF45;
+            --june-bud: #BAD96B;
+            --green-onion: #7D9C33;
+            --verdan-green: #455C08;
+            --white: #FFFFFF;
+        }
+
+        *, *:after, *:before {
+            box-sizing: border-box;
+        }
+
+        html {
+           scroll-behavior: smooth; /* Add smooth scrolling */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--mine-shaft);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        section, header {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+             height: 100vh; /* Ensure header takes full viewport height */
+             padding-bottom: 50px; /* Add padding if scanner overlaps scroll text */
+        }
+
+        .text-glow-green {
+            text-shadow: 0 0 8px var(--salad-green), 0 0 12px var(--june-bud);
+        }
+
+        .text-glow-blue {
+            text-shadow: 0 0 8px var(--june-bud), 0 0 12px var(--june-bud);
+        }
+        
+        .text-glow-pink {
+            text-shadow: 0 0 8px var(--salad-green), 0 0 12px var(--salad-green);
+        }
+
+        .bg-main-gradient {
+            background: linear-gradient(90deg, var(--salad-green), var(--june-bud));
+        }
+        
+        .border-glow-green {
+            box-shadow: 0 0 15px var(--green-onion), 0 0 5px var(--june-bud) inset;
+            border-color: var(--june-bud);
+        }
+         
+        /* Updated Card class for general use */
+        .card {
+             background-color: rgba(55, 52, 53, 0.15); /* Slightly transparent dark grey */
+             border: 1px solid rgba(186, 217, 107, 0.2); /* Faint June Bud border */
+             backdrop-filter: blur(5px);
+             -webkit-backdrop-filter: blur(5px);
+             border-radius: 0.75rem; /* Equivalent to rounded-xl */
+             padding: 1.5rem; /* Equivalent to p-6 */
+        }
+
+        
+        .cta-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--salad-green), 0 0 20px var(--salad-green);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--june-bud), 0 0 30px var(--june-bud);
+        }
+        
+        /* Custom graph styles */
+        .graph-container {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 20px;
+            border-bottom: 2px solid var(--june-bud);
+            position: relative;
+        }
+        .graph-bar {
+            width: 15%;
+            background: linear-gradient(to top, var(--salad-green), var(--june-bud));
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: height 1s ease-out;
+            box-shadow: 0 0 10px var(--salad-green);
+        }
+        .graph-bar .bar-label {
+            position: absolute;
+            bottom: -35px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--white);
+        }
+        .graph-bar .bar-value {
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: var(--june-bud);
+            opacity: 0;
+            transition: opacity 0.5s 1s ease;
+        }
+        .y-axis-label {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: rotate(-90deg) translateY(-50%);
+            transform-origin: left top;
+            color: var(--june-bud);
+        }
+
+        .slide-logo {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            width: 120px;
+            opacity: 0.6;
+            z-index: 50;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Scroll Animation Styles */
+        @keyframes item-reveal {
+            from {
+                opacity: 0;
+                transform: translateX(var(--x, 0)) translateY(var(--y, 0)) scale(0.9);
+            }
+        }
+
+        section > .content-wrapper {
+            view-timeline-name: --section-timeline;
+            animation: item-reveal both ease-out;
+            animation-timeline: --section-timeline;
+            animation-range: entry 20% cover 45%;
+            --x: -50%;
+            --y: 0;
+        }
+        
+        section:nth-of-type(even) > .content-wrapper {
+            --x: 50%;
+        }
+        
+        /* CORRECTED CSS SELECTOR */
+        section.bg-cover > .content-wrapper {
+            animation: none; /* Disable slide-in for background image sections */
+        }
+        
+        /* Spinning Ring */
+        .ring-wrapper {
+            --char-count: 30;
+            --inner-angle: calc((360 / var(--char-count)) * 1deg);
+            --radius: 18ch;
+            --font-size: 1rem;
+            position: fixed;
+            top: 5vh;
+            left: 5vw;
+            height: calc(var(--radius) * 2);
+            width: calc(var(--radius) * 2);
+            translate: -50% -50%;
+            display: grid;
+            place-items: center;
+            z-index: -1;
+            font-weight: bold;
+            opacity: 0.1;
+        }
+
+        .ring {
+            font-family: monospace;
+            text-transform: uppercase;
+            font-size: var(--font-size);
+            animation: rotation linear;
+            animation-timeline: scroll(root);
+            position: relative;
+        }
+
+        .char {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform:
+                translate(-50%, -50%)
+                rotate(calc(var(--inner-angle) * var(--char-index)))
+                translateY(calc(var(--radius) * -1));
+        }
+
+        @keyframes rotation {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Metallic Title Effect */
+        .metallic-title {
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(45deg, var(--salad-green), var(--june-bud), var(--white), var(--green-onion));
+            padding-bottom: 0.25rem; /* to make gradient more visible */
+        }
+
+        /* Animated Card Styles */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 40px 0;
+            width: 100%;
+        }
+
+        .card-container .box {
+            position: relative;
+            width: 320px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 30px;
+            transition: 0.5s;
+        }
+
+        .card-container .box::before {
+            content: ' ';
+            position: absolute;
+            top: 0;
+            left: 50px;
+            width: 50%;
+            height: 100%;
+            text-decoration: none;
+            background: #fff;
+            border-radius: 8px;
+            transform: skewX(15deg);
+            transition: 0.5s;
+        }
+
+        .card-container .box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50px; 
+            width: 50%;
+            height: 100%;
+            background: #fff;
+            border-radius: 8px;
+            transform: skewX(15deg);
+            transition: 0.5s;
+            filter: blur(30px);
+        }
+
+        .card-container .box:hover:before,
+        .card-container .box:hover:after {
+            transform: skewX(0deg);
+            left: 20px;
+            width: calc(100% - 90px);
+        }
+
+        .card-container .box:nth-child(1):before,
+        .card-container .box:nth-child(1):after {
+            background: linear-gradient(315deg, var(--salad-green), var(--green-onion))
+        }
+
+        .card-container .box:nth-child(2):before,
+        .card-container .box:nth-child(2):after {
+            background: linear-gradient(315deg, var(--june-bud), var(--verdan-green))
+        }
+
+        .card-container .box:nth-child(3):before,
+        .card-container .box:nth-child(3):after {
+            background: linear-gradient(315deg, var(--june-bud), var(--salad-green))
+        }
+
+        .card-container .box:nth-child(4):before,
+        .card-container .box:nth-child(4):after {
+            background: linear-gradient(315deg, var(--green-onion), var(--verdan-green))
+        }
+
+        .card-container .box span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .card-container .box span::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: 0.1s;
+            animation: animate 2s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08)
+        }
+
+        .card-container .box:hover span::before {
+            top: -50px;
+            left: 50px;
+            width: 100px;
+            height: 100px;
+            opacity: 1;
+        }
+
+        .card-container .box span::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: 0.5s;
+            animation: animate 2s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            animation-delay: -1s;
+        }
+
+        .card-container .box:hover span:after {
+            bottom: -50px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            opacity: 1;
+        }
+
+        @keyframes animate {
+            0%, 100% {
+                transform: translateY(10px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .card-container .box .content {
+            position: relative;
+            left: 0;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 1;
+            transition: 0.5s;
+            color: #fff;
+            height: 100%;
+        }
+
+        .card-container .box:hover .content {
+            left: -25px;
+            padding: 60px 40px;
+        }
+
+        .card-container .box .content h2 {
+            font-size: 1.5em; /* Adjusted size */
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .card-container .box .content p {
+            font-size: 1em; /* Adjusted size */
+            margin-bottom: 10px;
+            line-height: 1.4em;
+        }
+
+        .card-container .box .content a {
+            display: inline-block;
+            font-size: 1.1em;
+            color: var(--mine-shaft);
+            background: var(--white);
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .card-container .box .content a:hover {
+            background: var(--june-bud);
+        }
+
+        /* --- DATA SCANNER ANIMATION STYLES --- */
+        .scanner-animation-container {
+            position: relative;
+            width: 100vw;
+            height: 350px; /* Adjust height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            overflow: hidden; /* Hide anything outside the container */
+        }
+
+        .card-stream {
+            position: absolute;
+            width: 100vw;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        .card-line {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            white-space: nowrap;
+            user-select: none;
+            will-change: transform;
+        }
+
+        .card-wrapper {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            flex-shrink: 0;
+            border-radius: 15px; /* Added for glow */
+            transition: box-shadow 0.1s ease-in-out; /* Smooth transition for glow */
+        }
+
+        .glowing-card {
+             box-shadow: 0 0 20px rgba(186, 217, 107, 0.3),  /* june-bud glow */
+                        0 0 30px rgba(168, 207, 69, 0.2); /* salad-green glow */
+        }
+
+
+        .card-wrapper .card-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-normal {
+            background-color: var(--mine-shaft); /* Black background */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1; /* Lower z-index */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-text {
+             font-size: 1.5rem;
+             font-weight: bold;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(45deg, var(--salad-green), var(--june-bud));
+        }
+
+        .card-ascii {
+            background: transparent;
+            z-index: 2; /* Higher z-index */
+        }
+        
+        .ascii-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: var(--june-bud);
+            font-family: "Courier New", monospace;
+            font-size: 10px;
+            line-height: 12px;
+            overflow: hidden;
+            white-space: pre;
+            padding: 10px;
+            background-color: var(--mine-shaft); /* Ensure ASCII background is black */
+        }
+        
+        /* Swapped Clip Path Logic for Scanner Effect */
+        /* This reveals the Normal layer (bottom) */
+        .card-normal { clip-path: inset(0 0 0 var(--clip-pos, 0%)); }
+        /* This clips the ASCII layer (top) */
+        .card-ascii { clip-path: inset(0 calc(100% - var(--clip-pos, 0%)) 0 0); }
+
+
+        #scannerCanvas {
+            position: absolute;
+            top: 50%;
+            left: 0; /* Align with container */
+            transform: translateY(-50%);
+            width: 100vw;
+            height: 100%; /* Cover full height of container */
+            pointer-events: none;
+            z-index: 15; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="ring-wrapper" aria-hidden="true">
+        <div class="ring">
+            <span class="char" style="--char-index: 0;">V</span><span class="char" style="--char-index: 1;">e</span><span class="char" style="--char-index: 2;">r</span><span class="char" style="--char-index: 3;">a</span><span class="char" style="--char-index: 4;">l</span><span class="char" style="--char-index: 5;">o</span><span class="char" style="--char-index: 6;">g</span><span class="char" style="--char-index: 7;">i</span><span class="char" style="--char-index: 8;">x</span><span class="char" style="--char-index: 9;"> </span><span class="char" style="--char-index: 10;">•</span><span class="char" style="--char-index: 11;"> </span><span class="char" style="--char-index: 12;">S</span><span class="char" style="--char-index: 13;">e</span><span class="char" style="--char-index: 14;">c</span><span class="char" style="--char-index: 15;">u</span><span class="char" style="--char-index: 16;">r</span><span class="char" style="--char-index: 17;">e</span><span class="char" style="--char-index: 18;"> </span><span class="char" style="--char-index: 19;">•</span><span class="char" style="--char-index: 20;"> </span><span class="char" style="--char-index: 21;">C</span><span class="char" style="--char-index: 22;">o</span><span class="char" style="--char-index: 23;">n</span><span class="char" style="--char-index: 24;">n</span><span class="char" style="--char-index: 25;">e</span><span class="char" style="--char-index: 26;">c</span><span class="char" style="--char-index: 27;">t</span><span class="char" style="--char-index: 28;"> </span><span class="char" style="--char-index: 29;">•</span>
+        </div>
+    </div>
+    
+    <header>
+        <div class="content-wrapper text-center">
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="w-[36rem] max-w-[80vw] mx-auto mb-8">
+            <p class="mt-4 text-xl md:text-2xl text-gray-300">The Future of Smart Residential Living. Today.</p>
+        </div>
+        
+        <!-- DATA SCANNER ANIMATION -->
+        <div class="scanner-animation-container">
+            <canvas id="scannerCanvas"></canvas>
+            <div class="card-stream" id="cardStream">
+                <div class="card-line" id="cardLine"></div>
+            </div>
+        </div>
+
+        <p class="mt-8 text-sm text-gray-400">Scroll to explore</p>
+    </header>
+
+    <main>
+        <section id="slide-2">
+            <div class="content-wrapper w-full max-w-7xl text-center">
+                <h2 class="metallic-title text-3xl md:text-5xl font-bold mb-8">What is SecureConnect™?</h2>
+                <div class="card-container">
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>INTEGRATED</h2>
+                            <p>A single, unified platform connecting security, amenities, and building management into one seamless ecosystem.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>INTELLIGENT</h2>
+                            <p>Leveraging AI and IoT to automate tasks, predict maintenance needs, and optimize energy usage for a smarter, more efficient complex.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>INTUITIVE</h2>
+                            <p>Empowering residents and management with user-friendly mobile apps and dashboards for complete control and convenience.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>SECURE</h2>
+                            <p>Built with enterprise-grade security, end-to-end encryption, and POPIA compliance to protect your data and residents' privacy.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <!-- REORDERED SECTIONS START HERE -->
+                
+        <section id="smart-building-iot-sensors-main">
+             <div class="content-wrapper w-full max-w-7xl">
+                 <div class="grid md:grid-cols-2 gap-12 items-center">
+                     <div class="text-left">
+                         <h2 class="metallic-title text-4xl md:text-5xl font-bold">Smart Building IoT Sensors</h2>
+                         <p class="mt-2 text-xl md:text-2xl text-gray-300">Real-Time Intelligence for Smarter Infrastructure</p>
+                         <div class="mt-8 space-y-4">
+                             <div class="card p-4 rounded-lg border-glow-green">
+                                 <h3 class="font-bold text-lg" style="color: var(--june-bud);">Environmental Monitoring</h3>
+                                 <p class="text-sm text-gray-300">Tracking temperature, humidity, and air quality (CO₂, PM, VOCs).</p>
+                             </div>
+                             <div class="card p-4 rounded-lg border-glow-green">
+                                 <h3 class="font-bold text-lg" style="color: var(--june-bud);">Real-Time Utilities</h3>
+                                 <p class="text-sm text-gray-300">Energy and water consumption tracking for optimization and billing.</p>
+                             </div>
+                             <div class="card p-4 rounded-lg border-glow-green">
+                                 <h3 class="font-bold text-lg" style="color: var(--june-bud);">Infrastructure Diagnostics</h3>
+                                 <p class="text-sm text-gray-300">Detecting vibration, pressure, thermal anomalies, and structural cues.</p>
+                             </div>
+                             <div class="card p-4 rounded-lg border-glow-green">
+                                 <h3 class="font-bold text-lg" style="color: var(--june-bud);">Predictive Analytics</h3>
+                                 <p class="text-sm text-gray-300">AI-driven maintenance and performance optimization.</p>
+                             </div>
+                             <div class="card p-4 rounded-lg border-glow-green">
+                                 <h3 class="font-bold text-lg" style="color: var(--june-bud);">Central Dashboards & Automation</h3>
+                                 <p class="text-sm text-gray-300">A single-pane view with rule-based controls for management.</p>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="card p-4 rounded-xl border-glow-green">
+                          <img src="https://iili.io/KU6Xg4t.png" alt="Futuristic sectional view of a smart building with glowing data streams from IoT sensors to a central AI hub" class="rounded-lg">
+                     </div>
+                 </div>
+             </div>
+             <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+         </section>
+        
+        <section id="smart-building-iot-sensors-research">
+            <div class="content-wrapper w-full max-w-7xl text-center">
+                 <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">Deeper Insights: The IoT Advantage</h2>
+                 <div class="card-container">
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Operational & Sustainability Gains</h2>
+                            <p>Pilots show <strong>10–30% energy savings</strong> and <strong>40–60% fewer emergency call-outs</strong> through early leak and thermal detection. Automated work orders reduce admin time by up to 50%.</p>
+                        </div>
+                    </div>
+                     <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Rapid ROI & Long-Term Savings</h2>
+                            <p>Payback is commonly validated in <strong>8–12 week pilots</strong>. Reduced downtime and extended asset life (pumps, chillers, lifts) create significant long-term value and better compliance trails.</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                         <span></span>
+                        <div class="content">
+                            <h2>Security & Interoperability</h2>
+                            <p>Our systems are POPIA-aligned, with end-to-end encryption and role-based access. We use standardized APIs (BACnet, Modbus, MQTT) for vendor neutrality and future-proofing.</p>
+                        </div>
+                    </div>
+                     <div class="box">
+                         <span></span>
+                        <div class="content">
+                            <h2>Positive Environmental Impact</h2>
+                            <p>Demand-driven controls lower kWh/m² and water usage. Dashboards provide key environmental KPIs to drive continuous optimization and support sustainability goals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-7" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">AI-Powered Tenant Concierge</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Your 24/7 Digital Assistant</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-8">
+            <div class="content-wrapper w-full max-w-5xl">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10 text-center">Streamline Operations, Delight Residents</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="card p-8 rounded-xl border-glow-green">
+                        <!-- MOCK UI OF THE APP -->
+                        <div class="bg-black/50 p-4 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <img src="https://iili.io/KSEo3Hx.png" class="w-8 h-8 mr-3 rounded-full" />
+                                <div>
+                                    <p class="font-bold" style="color: var(--june-bud);">Vera-AI</p>
+                                    <p class="text-xs text-green-400">Online</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3 text-sm">
+                                <div class="bg-gray-700 p-3 rounded-lg w-fit max-w-xs">Hello! How can I help you today?</div>
+                                <div class="bg-blue-600 p-3 rounded-lg w-fit max-w-xs ml-auto text-white">I need to book the clubhouse for Saturday at 2 PM.</div>
+                                 <div class="bg-gray-700 p-3 rounded-lg w-fit max-w-xs">Of course. The clubhouse is available. I've just sent a confirmation to your email. Is there anything else?</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-left space-y-4">
+                        <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">24/7 Instant Responses</h3>
+                        <p class="text-gray-300">Our AI assistant handles resident requests instantly, any time of day. From booking amenities and logging maintenance issues to answering FAQs about the complex.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Reduced Administrative Load</h3>
+                        <p class="text-gray-300">Automating routine inquiries frees up your management staff to focus on high-priority tasks, improving overall efficiency and reducing operational costs.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Seamless Integration</h3>
+                        <p class="text-gray-300">Controls smart home features, reports maintenance issues, and schedules amenity access, all from one platform.</p>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-11" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Biometric Access Control</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Seamless, Secure, Sophisticated Entry.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-12">
+             <div class="content-wrapper w-full max-w-6xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">Security at Your Fingertips</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                     <div class="text-left space-y-4">
+                        <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Keyless Convenience</h3>
+                        <p class="text-gray-300">Replace traditional keys and fobs with state-of-the-art fingerprint, facial, or retinal scans for effortless access to buildings, amenities, and individual units.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Unbreakable Security</h3>
+                        <p class="text-gray-300">Biometric data is unique and cannot be lost, stolen, or duplicated, providing the highest level of security and eliminating risks associated with physical keys.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Auditable Access Logs</h3>
+                        <p class="text-gray-300">Maintain a detailed, timestamped log of every entry, enhancing accountability and providing invaluable data for security management and incident investigation.</p>
+                    </div>
+                     <div class="card p-8 rounded-xl border-glow-green">
+                        <img src="https://iili.io/KUQjbDX.png" alt="Biometric hand scanning for secure access control" class="rounded-lg"/>
+                     </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-13" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Vertical Indoor Farms</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Sustainable, On-Site, Fresh Produce.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-14">
+            <div class="content-wrapper w-full max-w-6xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">Grow Your Community's Well-being</h2>
+                 <div class="grid md:grid-cols-2 gap-12 items-center">
+                     <div class="card p-8 rounded-xl border-glow-green">
+                         <img src="https://iili.io/KUtmEo7.png" alt="Vertical Indoor Farms with green lighting" class="rounded-lg">
+                     </div>
+                     <div class="text-left space-y-4">
+                        <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Hyper-Local Food Source</h3>
+                        <p class="text-gray-300">Provide residents with access to fresh, pesticide-free produce grown directly within the complex, reducing food miles and promoting healthy eating.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Sustainable Living</h3>
+                        <p class="text-gray-300">Our hydroponic and aeroponic systems use up to 95% less water than traditional farming, integrating seamlessly with your building's sustainability goals.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Community Engagement</h3>
+                        <p class="text-gray-300">Indoor farms become vibrant community hubs, offering educational opportunities and fostering a shared sense of purpose and eco-conscious living.</p>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+        
+        <section id="slide-15" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Predictive Maintenance AI</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Fixing Problems Before They Happen.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-16">
+            <div class="content-wrapper w-full max-w-6xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">Minimize Disruptions, Maximize Lifespans</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                     <div class="card p-8 rounded-xl border-glow-green">
+                        <img src="https://iili.io/KUtmcAl.png" alt="Predictive Maintenance AI dashboard interface" class="rounded-lg"/>
+                     </div>
+                    <div class="card-container" style="margin:0; padding: 0;">
+                        <div class="box" style="margin:0;">
+                             <span></span>
+                            <div class="content">
+                                <h2>Veralogix (Predictive)</h2>
+                                <ul class="space-y-3 text-left">
+                                   <li><span class="text-green-400 mr-2">&#10003;</span>AI analyzes data to predict failures</li>
+                                   <li><span class="text-green-400 mr-2">&#10003;</span>Schedule maintenance at optimal times</li>
+                                   <li><span class="text-green-400 mr-2">&#10003;</span>Minimize disruptions and costs</li>
+                                   <li><span class="text-green-400 mr-2">&#10003;</span>Extend the life of critical assets</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-5" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">EV Charging Infrastructure</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Powering the Future of Mobility, Reliably.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-6">
+            <div class="content-wrapper w-full max-w-6xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">Meeting the EV Demand in South Africa</h2>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- THE CHALLENGE -->
+                    <div class="text-left p-6">
+                        <h3 class="text-2xl font-semibold mb-4 text-glow-pink" style="color: var(--salad-green);">The Challenge</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 mr-3 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span><strong class="text-white">Grid Instability:</strong> Frequent load-shedding disrupts charging and creates "charging anxiety" for residents.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 mr-3 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span><strong class="text-white">Overload Risk:</strong> Multiple EVs charging simultaneously can overload older building infrastructure, causing trips and failures.</span>
+                            </li>
+                            <li class="flex items-start">
+                               <svg class="w-6 h-6 mr-3 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span><strong class="text-white">Complex Billing:</strong> Fairly tracking and billing for shared charger usage is a major administrative hurdle.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- THE SOLUTION -->
+                    <div class="card-container" style="margin:0; padding:0">
+                       <div class="box" style="margin:0;">
+                         <span></span>
+                        <div class="content">
+                            <h2>The Veralogix Solution</h2>
+                             <ul class="space-y-4 text-left">
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 mr-3 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span><strong class="text-white">Smart Load Management:</strong> Our Level 2 AC chargers dynamically balance power, allowing more cars to charge safely on limited capacity.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 mr-3 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span><strong class="text-white">Solar & Battery Integration:</strong> We offer seamless integration with renewable energy sources for reliable charging, even during load-shedding.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 mr-3 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span><strong class="text-white">Automated Billing:</strong> Individual RFID access and a central platform ensure usage is tracked and billed accurately, with zero administrative effort.</span>
+                                </li>
+                            </ul>
+                        </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-17" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Augmented Reality Leasing</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Revolutionizing the Tenant Experience.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-18">
+            <div class="content-wrapper w-full max-w-5xl">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10 text-center">Lease Faster, To a Wider Audience</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                     <div class="card p-8 rounded-xl border-glow-green">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2070&auto=format&fit=crop" class="rounded-lg"/>
+                     </div>
+                    <div class="text-left space-y-4">
+                        <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Immersive Virtual Tours</h3>
+                        <p class="text-gray-300">Allow prospective tenants to explore properties from anywhere in the world with interactive, immersive 3D experiences that go beyond photos and videos.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Virtual Staging</h3>
+                        <p class="text-gray-300">Help prospects visualize their future home by using AR to place virtual furniture in empty units, customize wall colors, and explore different layouts.</p>
+                         <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Accelerate Decisions</h3>
+                        <p class="text-gray-300">AR and VR tours give buyers more confidence, leading to faster decisions and reduced time-to-lease by an average of two to three weeks.</p>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+        
+        <section id="slide-19" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Drone Roof Inspections</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Safer, Faster, and More Detailed Insights.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-20">
+            <div class="content-wrapper w-full max-w-7xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">A Higher Standard of Maintenance</h2>
+                 <div class="card-container">
+                    <div class="box">
+                         <span></span>
+                        <div class="content">
+                            <h2>Enhanced Safety</h2>
+                            <p>Eliminate the risks associated with manual roof inspections. Our drones capture high-resolution imagery without ever putting a person in harm's way.</p>
+                             <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                         <span></span>
+                        <div class="content">
+                           <h2>Unmatched Efficiency</h2>
+                            <p>Inspect entire building rooftops in a fraction of the time it takes manually, minimizing disruption and accelerating the maintenance cycle.</p>
+                             <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                         <span></span>
+                        <div class="content">
+                            <h2>Detailed Data</h2>
+                            <p>Capture thermal and high-definition visual data to identify subtle issues like water intrusion, heat loss, or structural weakness before they become major problems.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                       <div class="content">
+                           <h2>Cost-Effective</h2>
+                           <p>Preventative inspections with drones are significantly more cost-effective than reactive repairs, saving you money on labor and potential damages.</p>
+                           <a href="#">Learn More</a>
+                       </div>
+                   </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-21" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Community Engagement Platform</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Connecting Residents, Building a Community.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-22">
+            <div class="content-wrapper w-full max-w-7xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">More Than Just a Building—A Home.</h2>
+                 <div class="card-container">
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Centralized Hub</h2>
+                            <p>A dedicated digital space for residents and management to communicate, share news, and access important documents and announcements.</p>
+                            <a href="#">Join In</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                           <h2>Organize & Participate</h2>
+                            <p>Facilitate community events, from book clubs to weekend markets. Residents can browse, RSVP, and connect with their neighbors, fostering a vibrant social life.</p>
+                             <a href="#">Join In</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Amplify Voices</h2>
+                            <p>Provide a platform for residents to start discussions, create polls, and share feedback, ensuring management stays in tune with the community's needs and desires.</p>
+                             <a href="#">Join In</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Seamless Integration</h2>
+                            <p>Connects with our other services, allowing residents to book amenities or report issues directly through the community platform.</p>
+                             <a href="#">Join In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+        
+        <section id="slide-23" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Dynamic Pricing Algorithms</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Maximizing Revenue and Ensuring Fair Use.</p>
+            </div>
+            <img src="httpsG" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-24">
+            <div class="content-wrapper w-full max-w-7xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">Intelligent Pricing for Shared Amenities</h2>
+                <div class="card-container">
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                           <h2>Demand-Based Pricing</h2>
+                            <p>Our AI analyzes usage patterns to adjust pricing for amenities like parking or clubhouses. Higher prices during peak demand, lower during off-peak.</p>
+                             <a href="#">See How</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Maximize Revenue</h2>
+                            <p>Capture the true value of your shared resources by optimizing pricing, turning underutilized assets into significant new revenue streams for the complex.</p>
+                             <a href="#">See How</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Ensure Fair Allocation</h2>
+                            <p>Dynamic pricing encourages residents to use amenities during off-peak times, improving availability for everyone and ensuring fair, market-driven access.</p>
+                             <a href="#">See How</a>
+                        </div>
+                    </div>
+                     <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Data-Driven Insights</h2>
+                            <p>Gain valuable insights into amenity usage to inform future investments and operational decisions, ensuring your offerings match resident demand.</p>
+                             <a href="#">See How</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="httpsVeralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-3" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Wellness Monitoring Sensors</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Creating Healthier, More Productive Living Spaces.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-4">
+             <div class="content-wrapper w-full max-w-6xl">
+                 <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-2 text-center">Why Monitor Wellness?</h2>
+                 <p class="text-center text-gray-300 mb-10">The invisible environment has a visible impact on resident well-being and satisfaction.</p>
+                 <div class="grid md:grid-cols-2 gap-8 items-center">
+                     <div class="text-left space-y-6">
+                         <div class="card rounded-lg p-4">
+                             <h3 class="font-semibold text-lg" style="color: var(--june-bud);">Enhanced Cognitive Performance</h3>
+                             <p class="text-sm text-gray-300">Optimized air quality (low CO2, low VOCs) is proven to improve focus, decision-making, and overall mental clarity for residents working from home.</p>
+                         </div>
+                         <div class="card rounded-lg p-4">
+                             <h3 class="font-semibold text-lg" style="color: var(--june-bud);">Improved Health & Comfort</h3>
+                             <p class="text-sm text-gray-300">Monitoring humidity, particulates, and noise levels helps prevent respiratory issues, reduces stress, and ensures a comfortable, healthy living environment for all residents.</p>
+                         </div>
+                          <div class="card rounded-lg p-4">
+                             <h3 class="font-semibold text-lg" style="color: var(--june-bud);">Proactive Management</h3>
+                             <p class="text-sm text-gray-300">Our sensors provide real-time data to your building's management system, enabling automated adjustments to HVAC and alerting staff to potential issues like leaks or poor air quality before they become complaints.</p>
+                         </div>
+                     </div>
+                     <!-- GRAPH VISUALIZATION -->
+                     <div class="card p-6 rounded-xl border-glow-green">
+                         <h3 class="text-xl font-semibold mb-6 text-center text-glow-green" style="color: var(--june-bud);">Measurable Impact on Resident Well-being</h3>
+                         <div class="graph-container">
+                             <div class="y-axis-label">Improvement (%)</div>
+                             <div id="bar1" class="graph-bar" style="height: 0%;"><span class="bar-value">+15%</span><span class="bar-label">Cognitive Scores</span></div>
+                             <div id="bar2" class="graph-bar" style="height: 0%;"><span class="bar-value">+20%</span><span class="bar-label">Productivity</span></div>
+                             <div id="bar3" class="graph-bar" style="height: 0%;"><span class="bar-value">-23%</span><span class="bar-label">Respiratory Symptoms</span></div>
+                         </div>
+                         <p class="text-xs text-center mt-4 text-gray-400">Source: 2025 Smart Building Wellness Studies</p>
+                     </div>
+                 </div>
+             </div>
+             <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+         </section>
+        
+        <section id="slide-25" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Virtual Property Management</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Full Control, From Anywhere.</p>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-26">
+            <div class="content-wrapper w-full max-w-7xl text-center">
+                <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">A Single Pane of Glass for Your Entire Complex</h2>
+                <div class="card-container">
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Centralized Operations</h2>
+                            <p>Manage everything—from rent collection and accounting to maintenance scheduling and vendor payments—through a single, intuitive dashboard.</p>
+                             <a href="#">Discover</a>
+                        </div>
+                    </div>
+                    <div class->"box">
+                        <span></span>
+                        <div class="content">
+                            <h2>Automated Workflows</h2>
+                            <p>Automate rent reminders, late fee calculations, and maintenance assignments. Reduce manual work and human error, freeing up your team for strategic tasks.</p>
+                             <a href="#">Discover</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                           <h2>Accessible Anywhere</h2>
+                            <p>Our cloud-based platform allows your management team to oversee all property operations securely from any device, at any time.</p>
+                             <a href="#">Discover</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <span></span>
+                        <div class="content">
+                           <h2>Enhanced Security</h2>
+                            <p>Securely manage sensitive tenant data, financial records, and access logs with enterprise-grade encryption and compliance features built-in.</p>
+                             <a href="#">Discover</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+        
+        <section id="slide-27" class="bg-cover bg-center">
+            <div class="content-wrapper">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold text-center">Follow-Me Guardian Lighting</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-200 text-center">Intelligent Lighting for Unwavering Safety.</p>
+            </div>
+    <img src="httpsm" alt="Veralogix SecureConnect Logo" class="slide-logo">
+</section>
+
+<!-- Section for "Follow-Me Guardian Lighting" - Content Slide -->
+<section id="slide-28">
+    <div class="content-wrapper w-full max-w-5xl text-center">
+        <h2 class="metallic-title text-3xl md:text-4xl font-bold mb-10">A Personal Path of Light and Security</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+             <div class="card p-8 rounded-xl border-glow-green">
+                <img src="https://images.unsplash.com/photo-1533512913959-1e2b834e5a95?q=80&w=1968&auto=format&fit=crop" class="rounded-lg"/>
+             </div>
+            <div class="text-left space-y-4">
+                <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Dynamic Illumination</h3>
+                <p class="text-gray-300">Smart sensors detect residents' movement, illuminating pathways as they walk through the complex at night. It's a personal, energy-efficient halo of safety.</p>
+                 <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Enhanced Security</h3>
+                <p class="text-gray-300">Sudden illumination deters potential intruders and ensures all common areas are well-lit when occupied, greatly enhancing resident security and peace of mind.</p>
+                 <h3 class="text-xl font-semibold text-glow-blue" style="color: var(--june-bud);">Optional Drone Escort</h3>
+                <p class="text-gray-300">For ultimate security, residents can request a 'Guardian Drone' escort, which provides overhead lighting and surveillance from their car to their front door.</p>
+            </div>
+        </div>
+    </div>
+    <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+</section>
+        
+        <!-- REORDERED SECTIONS END HERE -->
+
+        <section id="slide-29">
+            <div class="content-wrapper w-full max-w-5xl text-center">
+                <h2 class="metallic-title text-3xl md:text-5xl font-bold mb-12">The SecureConnect™ Advantage</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card p-6 rounded-lg text-center">
+                        <h3 class="text-4xl font-bold bg-main-gradient text-transparent bg-clip-text mb-2">30%</h3>
+                        <p class="font-semibold">Reduction in Energy Costs</p>
+                        <p class="text-xs text-gray-400 mt-1">via smart IoT sensors and automation.</p>
+                    </div>
+                    <div class="card p-6 rounded-lg text-center">
+                        <h3 class="text-4xl font-bold bg-main-gradient text-transparent bg-clip-text mb-2">50%</h3>
+                        <p class="font-semibold">Faster Maintenance Response</p>
+                        <p class="text-xs text-gray-400 mt-1">with AI-powered predictive scheduling.</p>
+                    </div>
+                    <div class="card p-6 rounded-lg text-center">
+                        <h3 class_data="text-4xl font-bold bg-main-gradient text-transparent bg-clip-text mb-2">70%</h3>
+                        <p class="font-semibold">Fewer Resident Inquiries</p>
+                         <p class="text-xs text-gray-400 mt-1">handled by our 24/7 AI concierge.</p>
+                    </div>
+                     <div class="card p-6 rounded-lg text-center">
+                        <h3 class="text-4xl font-bold bg-main-gradient text-transparent bg-clip-text mb-2">10%</h3>
+                        <p class="font-semibold">Increase in Property Value</p>
+                        <p class="text-xs text-gray-400 mt-1">from future-proof infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+        <section id="slide-30">
+            <div class="content-wrapper w-full max-w-4xl text-center">
+                 <h2 class="metallic-title text-3xl md:text-5xl font-bold mb-8">Our Commitment to Security</h2>
+                 <p class="text-lg text-gray-300 mb-8">Your residents' safety and data privacy are not an afterthought—they are the foundation of everything we build. Our platform is architected with multi-layered, enterprise-grade security.</p>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <span class="card py-2 px-4 rounded-full text-sm border-glow-green">End-to-End Encryption</span>
+                    <span class="card py-2 px-4 rounded-full text-sm border-glow-green">POPIA Compliant</span>
+                    <span class="card py-2 px-4 rounded-full text-sm border-glow-green">Biometric Access Control</span>
+                    <span class="card py-2 px-4 rounded-full text-sm border-glow-green">24/7 Threat Monitoring</span>
+                    <span class="card py-2 px-4 rounded-full text-sm border-glow-green">Regular Security Audits</span>
+                </div>
+            </div>
+            <img src="httpspro-presentation-v2.html" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+
+
+        <section id="slide-31">
+            <div class="content-wrapper text-center">
+                <h2 class="metallic-title text-4xl md:text-6xl font-bold">Ready to build the future?</h2>
+                <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">Let's partner to transform your residential complex into a secure, efficient, and desirable smart living community.</p>
+                <button class="cta-button bg-main-gradient text-black font-bold py-4 px-10 rounded-lg mt-12 text-lg">
+                    Schedule a Personalized Demo
+                </button>
+            </div>
+            <img src="https://iili.io/KSEo3Hx.png" alt="Veralogix SecureConnect Logo" class="slide-logo">
+        </section>
+    </main>
+
+    <script>
+// --- DATA SCANNER SCRIPT ---
+
+const scannerLeft = window.innerWidth / 2 - 2;
+const scannerRight = window.innerWidth / 2 + 2;
+
+class CardStreamController {
+    constructor() {
+        this.container = document.getElementById("cardStream");
+        this.cardLine = document.getElementById("cardLine");
+        this.position = 0;
+        this.velocity = 120; // px/s
+        this.direction = -1; // -1 for left-to-right
+        this.isAnimating = true;
+        this.lastTime = 0;
+        
+        this.cardPhrases = [
+            "Security You Can Trust.",
+            "Security for the Modern World.",
+            "From Physical to Digital.",
+            "From Physical to Digital.", 
+            "Securing Your Digital Life.",
+            "Guarding What Matters Most.",
+            "24/7 Watchful Eyes.",
+            "Your Personal Guardian."
+        ];
+
+        this.init();
+    }
+
+    init() {
+        this.populateCardLine();
+        this.calculateDimensions();
+        this.setupEventListeners();
+        this.animate();
+    }
+
+    calculateDimensions() {
+        if (!this.container || !this.cardLine) return; // Add null check
+        this.containerWidth = this.container.offsetWidth;
+        const cardWidth = 400;
+        const cardGap = 60;
+        const cardCount = this.cardLine.children.length / 2; 
+        this.cardLineWidth = (cardWidth + cardGap) * cardCount;
+    }
+
+    setupEventListeners() {
+        window.addEventListener("resize", () => this.calculateDimensions());
+    }
+
+    animate() {
+        const currentTime = performance.now();
+        if (this.lastTime === 0) this.lastTime = currentTime;
+        const deltaTime = (currentTime - this.lastTime) / 1000;
+        this.lastTime = currentTime;
+
+        if (this.isAnimating) {
+            this.position += this.velocity * this.direction * deltaTime;
+            this.updateCardPosition();
+        }
+
+        requestAnimationFrame(() => this.animate());
+    }
+
+    updateCardPosition() {
+        if (!this.cardLine || !this.cardLineWidth || this.cardLineWidth === 0) return; // Add check for cardLineWidth
+
+        const totalWidth = this.cardLine.scrollWidth / 2; // Use half because we doubled the content for looping
+        
+        if (this.direction === -1) { // Left-to-right
+             if (this.position <= -totalWidth) { // Reset when the end of the first set reaches the left edge
+                this.position += totalWidth;
+            }
+        } else { // Right-to-left
+             if (this.position >= totalWidth) { // Check if position exceeds the width of one set
+                this.position -= totalWidth; // Reset position
+            }
+        }
+    
+        this.cardLine.style.transform = `translateX(${this.position}px)`; // Use positive position for left-to-right
+        this.updateCardClipping();
+    }
+    
+    
+    generateCode(width, height) {
+        const codeChars = `{}[]<>;:,._-+=!@#$%^&*|/\\"'~?01`;
+        let out = "";
+        for (let row = 0; row < height; row++) {
+            let line = "";
+            for (let col = 0; col < width; col++) {
+                line += codeChars[Math.floor(Math.random() * codeChars.length)];
+            }
+            out += line + (row < height - 1 ? "\n" : "");
+        }
+        return out;
+    }
+
+    calculateCodeDimensions(cardWidth, cardHeight) {
+        const fontSize = 10;
+        const lineHeight = 12;
+        const charWidth = 6; 
+        const width = Math.floor(cardWidth / charWidth);
+        const height = Math.floor(cardHeight / lineHeight);
+        return { width, height };
+    }
+
+
+    createCardWrapper(index) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "card-wrapper glowing-card"; // Add glowing class by default
+
+        // Card with text - Now Z-index 1 (Below)
+        const normalCard = document.createElement("div");
+        normalCard.className = "card-wrapper__card card-layer card-normal";
+        const textElement = document.createElement("div");
+        textElement.className = "card-text";
+        textElement.textContent = this.cardPhrases[index % this.cardPhrases.length];
+        normalCard.appendChild(textElement);
+
+        // Card with ASCII art - Now Z-index 2 (On Top)
+        const asciiCard = document.createElement("div");
+        asciiCard.className = "card-wrapper__card card-layer card-ascii";
+        const asciiContent = document.createElement("div");
+        asciiContent.className = "ascii-content";
+        const { width, height } = this.calculateCodeDimensions(400, 250);
+        asciiContent.textContent = this.generateCode(width, height);
+        
+        asciiCard.appendChild(asciiContent);
+        
+        wrapper.appendChild(normalCard); // Add normal card first (rendered below)
+        wrapper.appendChild(asciiCard); // Add ascii card second (rendered on top)
+
+        return wrapper;
+    }
+
+     updateCardClipping() {
+        const scannerX = window.innerWidth / 2;
+        const scannerWidth = 4; // Width of the scanner beam
+        const scannerLeftEdge = scannerX - scannerWidth / 2;
+        const scannerRightEdge = scannerX + scannerWidth / 2;
+        let anyScanningActive = false;
+
+        document.querySelectorAll(".card-wrapper").forEach((wrapper) => {
+            const rect = wrapper.getBoundingClientRect();
+            const cardLeft = rect.left;
+            const cardRight = rect.right;
+            const cardWidth = rect.width;
+            
+            const normalCard = wrapper.querySelector(".card-normal");
+            const asciiCard = wrapper.querySelector(".card-ascii");
+
+            // Calculate the percentage of the card that is to the left of the scanner center
+            const clipPercent = Math.max(0, Math.min(100, ((scannerX - cardLeft) / cardWidth) * 100));
+
+            // Check if the card intersects with the scanner beam area
+            const intersectsScanner = cardLeft < (scannerRightEdge + 10) && cardRight > (scannerLeftEdge - 10); 
+
+            if (intersectsScanner) {
+                 anyScanningActive = true;
+                 wrapper.classList.remove('glowing-card'); // Remove glow when intersecting
+            } else {
+                wrapper.classList.add('glowing-card'); // Add glow back when not intersecting
+            }
+            
+            // Apply clip-path based on the calculated percentage
+             if (normalCard && asciiCard) { // Add null checks
+                 // For ASCII first, revealing Normal:
+                 // ASCII clips from right to left (disappears)
+                 asciiCard.style.setProperty('--clip-pos', `${clipPercent}%`); 
+                 // Normal clips from right to left (appears)
+                 normalCard.style.setProperty('--clip-pos', `${clipPercent}%`);
+             }
+        });
+
+        if (window.setScannerScanning) {
+            window.setScannerScanning(anyScanningActive);
+        }
+    }
+
+
+    populateCardLine() {
+         if (!this.cardLine) return; // Add null check
+        this.cardLine.innerHTML = "";
+        const cardsCount = 16; // Increased count for better looping and phrase variety
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < cardsCount; i++) {
+            fragment.appendChild(this.createCardWrapper(i));
+        }
+        this.cardLine.appendChild(fragment);
+        this.cardLine.appendChild(fragment.cloneNode(true)); // Duplicate for seamless loop
+    }
+}
+
+// Simplified Scanner Beam Class (No Particles)
+class ScannerBeam {
+    constructor() {
+        this.canvas = document.getElementById("scannerCanvas");
+         if (!this.canvas) {
+             console.error("scannerCanvas not found");
+             return; 
+         }
+        this.ctx = this.canvas.getContext("2d");
+        this.w = window.innerWidth;
+        this.h = 350; // Match container height
+        this.lightBarX = this.w / 2;
+        this.scanningActive = false;
+        this.setupCanvas();
+        this.animate();
+        window.addEventListener("resize", () => this.onResize());
+    }
+
+    setupCanvas() {
+        this.canvas.width = this.w;
+        this.canvas.height = this.h;
+    }
+
+    onResize() {
+        this.w = window.innerWidth;
+        this.lightBarX = this.w / 2;
+        this.setupCanvas();
+    }
+
+    drawLightBar() {
+        this.ctx.clearRect(0, 0, this.w, this.h);
+        
+        const glowIntensity = this.scanningActive ? 1.5 : 1.0; // Subtle intensity change
+        const lineWidth = 4; // Width of the beam
+
+        // --- Draw the Core Beam ---
+        const coreGradient = this.ctx.createLinearGradient(0, 0, 0, this.h);
+        coreGradient.addColorStop(0, "transparent");
+        // Use June Bud for the core, slightly brighter when active
+        coreGradient.addColorStop(0.5, `rgba(186, 217, 107, ${this.scanningActive ? 1.0 : 0.9})`); 
+        coreGradient.addColorStop(1, "transparent");
+        
+        this.ctx.fillStyle = coreGradient;
+        this.ctx.fillRect(this.lightBarX - lineWidth / 2, 0, lineWidth, this.h);
+
+        // --- Draw the Outer Glow ---
+        const glowRadius = this.scanningActive ? 60 : 40; // Adjust glow size
+        const glowGradient = this.ctx.createRadialGradient(
+            this.lightBarX, this.h / 2, 0, 
+            this.lightBarX, this.h / 2, glowRadius 
+        );
+         // Use Salad Green for the outer glow, slightly brighter/wider when active
+        glowGradient.addColorStop(0, `rgba(168, 207, 69, ${this.scanningActive ? 0.3 : 0.2})`);
+        glowGradient.addColorStop(0.7, `rgba(186, 217, 107, ${this.scanningActive ? 0.1 : 0.05})`); // Blend with June Bud
+        glowGradient.addColorStop(1, "transparent");
+        
+        this.ctx.fillStyle = glowGradient;
+        // Draw the glow wider than the beam
+        this.ctx.fillRect(this.lightBarX - glowRadius, 0, glowRadius * 2, this.h); 
+    }
+
+
+    animate() {
+        this.drawLightBar();
+        requestAnimationFrame(() => this.animate());
+    }
+
+    setScanningActive(active) {
+         if (this.scanningActive !== active) { // Only update if state changes
+            this.scanningActive = active;
+         }
+    }
+}
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Main graph animation observer
+            const graphSection = document.getElementById('slide-4');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                          const bar1 = document.getElementById('bar1');
+                          const bar2 = document.getElementById('bar2');
+                          const bar3 = document.getElementById('bar3');
+                          if(bar1) bar1.style.height = '60%';
+                          if(bar2) bar2.style.height = '80%';
+                          if(bar3) bar3.style.height = '92%';
+                          // Check if entry target exists before querying
+                          if (entry.target) {
+                             entry.target.querySelectorAll('.bar-value').forEach(el => el.style.opacity = '1');
+                          }
+                        }, 100);
+                    } else {
+                          const bar1 = document.getElementById('bar1');
+                          const bar2 = document.getElementById('bar2');
+                          const bar3 = document.getElementById('bar3');
+                          if(bar1) bar1.style.height = '0%';
+                          if(bar2) bar2.style.height = '0%';
+                          if(bar3) bar3.style.height = '0%';
+                           // Check if entry target exists before querying
+                          if (entry.target) {
+                            entry.target.querySelectorAll('.bar-value').forEach(el => el.style.opacity = '0');
+                          }
+                    }
+                });
+            }, { threshold: 0.5 }); 
+
+            if(graphSection) {
+                observer.observe(graphSection);
+            }
+
+            // Data scanner initialization
+            // Ensure necessary elements exist before initializing
+            if (document.getElementById('cardStream') && document.getElementById('scannerCanvas')) {
+                const cardStream = new CardStreamController();
+                const scannerBeam = new ScannerBeam(); // Use the corrected class name
+
+                window.setScannerScanning = (active) => {
+                    // Check if scannerBeam is initialized before calling method
+                    if (scannerBeam && typeof scannerBeam.setScanningActive === 'function') {
+                       scannerBeam.setScanningActive(active);
+                    }
+                };
+            } else {
+                console.error("Scanner animation elements not found.");
+            }
+        });
+    </script>
+</body>
+</html>
