@@ -516,11 +516,11 @@
             background-color: var(--mine-shaft); /* Ensure ASCII background is black */
         }
         
-        /* Swapped Clip Path Logic for Scanner Effect */
-        /* This reveals the Normal layer (bottom) */
-        .card-normal { clip-path: inset(0 0 0 var(--clip-pos, 0%)); }
-        /* This clips the ASCII layer (top) */
-        .card-ascii { clip-path: inset(0 calc(100% - var(--clip-pos, 0%)) 0 0); }
+        /* Corrected Clip Path Logic for Scanner Effect */
+        /* This reveals the Normal layer (bottom) by clipping its right side */
+        .card-normal { clip-path: inset(0 calc(100% - var(--clip-pos, 0%)) 0 0); }
+        /* This clips the ASCII layer (top) from the left */
+        .card-ascii { clip-path: inset(0 0 0 var(--clip-pos, 0%)); }
 
 
         #scannerCanvas {
