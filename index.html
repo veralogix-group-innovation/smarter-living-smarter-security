@@ -1417,8 +1417,9 @@ class CardStreamController {
         for (let i = 0; i < cardsCount; i++) {
             fragment.appendChild(this.createCardWrapper(i));
         }
+        const duplicate = fragment.cloneNode(true);
         this.cardLine.appendChild(fragment);
-        this.cardLine.appendChild(fragment.cloneNode(true)); // Duplicate for seamless loop
+        this.cardLine.appendChild(duplicate); // Duplicate for seamless loop
     }
 }
 
