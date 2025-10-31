@@ -484,7 +484,7 @@
         .card-normal {
             background-color: var(--mine-shaft); /* Black background */
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            z-index: 1; /* Lower z-index */
+            z-index: 2; /* Higher z-index */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -502,7 +502,7 @@
 
         .card-ascii {
             background: transparent;
-            z-index: 2; /* Higher z-index */
+            z-index: 1; /* Lower z-index */
         }
         
         .ascii-content {
@@ -522,10 +522,10 @@
         }
         
         /* Corrected Clip Path Logic for Scanner Effect */
-        /* This reveals the Normal layer (bottom) by clipping its right side */
-        .card-normal { clip-path: inset(0 calc(100% - var(--clip-pos, 0%)) 0 0); }
-        /* This clips the ASCII layer (top) from the left */
-        .card-ascii { clip-path: inset(0 0 0 var(--clip-pos, 0%)); }
+        /* This reveals the ASCII layer (bottom) by clipping the Normal layer (top) */
+        .card-normal { clip-path: inset(0 0 0 var(--clip-pos, 0%)); }
+        /* This clips the bottom layer to match the reveal */
+        .card-ascii { clip-path: inset(0 calc(100% - var(--clip-pos, 0%)) 0 0); }
 
 
         #scannerCanvas {
@@ -1241,7 +1241,7 @@ class CardStreamController {
         this.cardLine = document.getElementById("cardLine");
         this.position = 0;
         this.velocity = 120; // px/s
-        this.direction = -1; // -1 for left-to-right
+        this.direction = 1; // 1 for right-to-left
         this.isAnimating = true;
         this.lastTime = 0;
         
@@ -1358,8 +1358,8 @@ class CardStreamController {
         
         asciiCard.appendChild(asciiContent);
         
-        wrapper.appendChild(normalCard); // Add normal card first (rendered below)
-        wrapper.appendChild(asciiCard); // Add ascii card second (rendered on top)
+        wrapper.appendChild(asciiCard); // Add ascii card first (rendered below)
+        wrapper.appendChild(normalCard); // Add normal card second (rendered on top)
 
         return wrapper;
     }
